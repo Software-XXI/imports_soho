@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Imports Soho{% endblock %}</title>
+    {% load static %}
+    <link rel="icon" type="image/jpeg" href="{% static 'logo.jpeg' %}">
+    <link rel="stylesheet" href="{% static 'catalog/css/style.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <a href="{% url 'catalog' 'nuevo' %}" class="brand">
+                <img src="{% static 'logo.jpeg' %}" alt="Imports Soho" class="brand-logo">
+            </a>
+            <nav class="nav-desktop" aria-label="Secciones">
+                {% for value, label in sections %}
+                    <a href="{% url 'catalog' value %}"
+                       class="nav-link {% if active_section == value %}nav-link-active{% endif %}">{{ label }}</a>
+                {% endfor %}
+            </nav>
+            <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <nav class="nav-menu" id="nav-menu" aria-hidden="true">
+            {% for value, label in sections %}
+                <a href="{% url 'catalog' value %}"
+                   class="nav-link {% if active_section == value %}nav-link-active{% endif %}">{{ label }}</a>
+            {% endfor %}
+        </nav>
+    </header>
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+        <div class="container">Imports Soho &copy; {% now "Y" %}</div>
+    </footer>
+    <script src="{% static 'catalog/js/menu.js' %}" defer></script>
+    <script src="{% static 'catalog/js/lightbox.js' %}" defer></script>
+</body>
+</html>

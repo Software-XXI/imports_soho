@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Catálogo — Imports Soho{% endblock %}
+
+{% block content %}
+<section class="grid">
+    {% for product in products %}
+        <article class="card">
+            {% if product.image %}
+                <img class="card-img" src="{{ product.image.url }}" alt="{{ product.name }}"
+                     data-full="{{ product.image_large_url|default:product.image.url }}">
+            {% else %}
+                <div class="card-img card-img-empty">Sin imagen</div>
+            {% endif %}
+            <div class="card-body">
+                <h2 class="card-title">{{ product.name }}</h2>
+                <p class="card-price">${{ product.price|floatformat:2 }}</p>
+            </div>
+        </article>
+    {% empty %}
+        <p class="empty">No hay productos en esta sección todavía.</p>
+    {% endfor %}
+</section>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar">&times;</button>
+    <div class="lightbox-stage" id="lightbox-stage">
+        <img id="lightbox-img" src="" alt="">
+    </div>
+</div>
+{% endblock %}
